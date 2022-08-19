@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import TodoHeader from "./TodoHeader";
 import TodoBody from "./TodoBody";
@@ -13,15 +14,30 @@ export default function TodoList() {
     setTodos(newTodos);
   };
 
+  const removeTodo = (id) => {
+    const newTodos = [...todos].filter((todo) => todo.id !== id);
+    setTodos(newTodos);
+  };
+
+  const updateTodo = (todoId, newValue) => {
+    if (!newValue) {
+      return;
+    }
+    const newTodos = todos.map((item) =>
+      item.id === todoId ? newValue : item
+    );
+    setTodos(newTodos);
+  };
+
   return (
     <header>
       <h1>Tast List 2022</h1>
-      <TodoHeader addTodo={addTodo} />
+      <TodoHeader onSubmit={addTodo} />
       <br />
       <hr />
       <br />
       <br />
-      <TodoBody todos={todos} />
+      <TodoBody todos={todos} removeTodo={removeTodo} updateTodo={updateTodo} />
     </header>
   );
 }
